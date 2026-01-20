@@ -26,7 +26,7 @@
 - Domain Recon (JSON)
 ![Domain JSON](img/aetherrecon_domainJson.png)
 ---
-- IP Recon
+- IP Recon(JSON)
 ![IP JSON](img/aetherrecon_ipJson.png)
 ## 📦 Installation
 
@@ -103,4 +103,5 @@ AetherRecon/
 
 # ❤️ Contributing
 > **Pull requests, issues and feature ideas are welcome.**
+
 ---
