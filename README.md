@@ -17,17 +17,17 @@
 
 # 📸 Screenshoot's
 
-- Domain Recon (CLI)
-![Domain Recon](img/aetherrecon2.png)
+- Main CLI
+![Main CLI](img/AetherRecon.png)
+---
+- Domain Analysis (CLI)
+![Domain Analysis](img/AetherRecon_Domain.png)
 ---
 - IP Recon (CLI)
-![IP Recon](img/aetherrecon1.png)
+![IP Recon](img/AetherRecon_IP.png)
 ---
-- Domain Recon (JSON)
-![Domain JSON](img/aetherrecon_domainJson.png)
----
-- IP Recon(JSON)
-![IP JSON](img/aetherrecon_ipJson.png)
+- Subdomain Recon (CLI)
+![Subdomain Reco](img/AetherRecon_Subdomain.png)
 ## 📦 Installation
 
 ```bash
@@ -46,17 +46,38 @@ python main.py --help
 ```bash
 python main.py domain example.com
 ```
+- JSON Output
+```bash
+python main.py domain example.com --json
+```
 ---
 - IP analysis
 ```bash
 python main.py ip 8.8.8.8
 ```
----
-- JSON OUTPUT
+- JSON Output
 ```bash
-- python main.py domain example.com --json
-- python main.py ip 8.8.8.8 --json
+python main.py ip 8.8.8.8 --json
 ```
+---
+- Subdomain Enumeration
+```bash
+python main.py subdomain example.com 
+```
+- JSON Output
+```bash
+python main.py subdomain example.com --json
+```
+---
+- HTTP Analysis
+```bash
+python main.py http http://example.com
+```
+- JSON Output
+```bash
+python main.py http http://example.com --json
+```
+---
 
 # 🧠 Architecture
 ```bash
@@ -67,10 +88,10 @@ AetherRecon/
 │   └── engine.py
 │
 ├── img/
-│   ├── aetherrecon_domainJson.png
-│   ├── aetherrecon_ipJson.png 
-│   ├── aetherrecon1.png
-│   └── aetherrecon2.png
+│   ├── AetherRecon.png
+│   ├── AetherRecon_Domain.png
+│   ├── AetherRecon_IP.png
+│   └── AetherRecon_Subdomain.png
 │
 ├── modules/
 │   └── domain/
@@ -105,3 +126,4 @@ AetherRecon/
 > **Pull requests, issues and feature ideas are welcome.**
 
 ---
+
