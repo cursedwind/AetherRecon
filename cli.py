@@ -7,16 +7,14 @@ from core.config import APP_NAME, APP_VERSION
 
 
 def banner():
-    print(f"""
-   █████████             █████    █████                         ███████████                                        
-  ███░░░░░███           ░░███    ░░███                         ░░███░░░░░███                                       
- ░███    ░███   ██████  ███████   ░███████    ██████  ████████  ░███    ░███   ██████   ██████   ██████  ████████  
- ░███████████  ███░░███░░░███░    ░███░░███  ███░░███░░███░░███ ░██████████   ███░░███ ███░░███ ███░░███░░███░░███ 
- ░███░░░░░███ ░███████   ░███     ░███ ░███ ░███████  ░███ ░░░  ░███░░░░░███ ░███████ ░███ ░░░ ░███ ░███ ░███ ░███ 
- ░███    ░███ ░███░░░    ░███ ███ ░███ ░███ ░███░░░   ░███      ░███    ░███ ░███░░░  ░███  ███░███ ░███ ░███ ░███ 
- █████   █████░░██████   ░░█████  ████ █████░░██████  █████     █████   █████░░██████ ░░██████ ░░██████  ████ █████
-░░░░░   ░░░░░  ░░░░░░     ░░░░░  ░░░░ ░░░░░  ░░░░░░  ░░░░░     ░░░░░   ░░░░░  ░░░░░░   ░░░░░░   ░░░░░░  ░░░░ ░░░░░
-
+    print(f"""                                                                                                                        
+    ▄▄                         ▄▄                            ▄▄▄▄▄▄                                                     
+   ████                ██      ██                            ██▀▀▀▀██                                                   
+   ████     ▄████▄   ███████   ██▄████▄   ▄████▄    ██▄████  ██    ██   ▄████▄    ▄█████▄   ▄████▄   ██▄████▄           
+  ██  ██   ██▄▄▄▄██    ██      ██▀   ██  ██▄▄▄▄██   ██▀      ███████   ██▄▄▄▄██  ██▀    ▀  ██▀  ▀██  ██▀   ██           
+  ██████   ██▀▀▀▀▀▀    ██      ██    ██  ██▀▀▀▀▀▀   ██       ██  ▀██▄  ██▀▀▀▀▀▀  ██        ██    ██  ██    ██           
+ ▄██  ██▄  ▀██▄▄▄▄█    ██▄▄▄   ██    ██  ▀██▄▄▄▄█   ██       ██    ██  ▀██▄▄▄▄█  ▀██▄▄▄▄█  ▀██▄▄██▀  ██    ██           
+ ▀▀    ▀▀    ▀▀▀▀▀      ▀▀▀▀   ▀▀    ▀▀    ▀▀▀▀▀    ▀▀       ▀▀    ▀▀▀   ▀▀▀▀▀     ▀▀▀▀▀     ▀▀▀▀    ▀▀    ▀▀                                                                                                                               
                                         {APP_NAME} - {APP_VERSION}
     """)
 
@@ -27,6 +25,10 @@ def parse_args():
 
     subparsers = parser.add_subparsers(dest="mode", help="Available modes")
 
+    subdomain_parser = subparsers.add_parser("subdomain", help="Run subdomain enumeration")
+    subdomain_parser.add_argument("target", help="Target domain (example.com)")
+    subdomain_parser.add_argument("--json", action="store_true", help="Output in JSON format")
+
     domain_parser = subparsers.add_parser("domain", help="Run domain reconnaissance")
     domain_parser.add_argument("target", help="Target domain (example.com)")
     domain_parser.add_argument("--json", action="store_true", help="Output in JSON format")
@@ -35,8 +37,11 @@ def parse_args():
     ip_parser.add_argument("target", help="Target IP address")
     ip_parser.add_argument("--json", action="store_true", help="Output in JSON format")
 
-    return parser.parse_args()
+    http_parser = subparsers.add_parser("http", help="Run HTTP analysis")
+    http_parser.add_argument("target", help="Target URL (http://example.com)")
+    http_parser.add_argument("--json", action="store_true", help="Output in JSON format")
 
+    return parser.parse_args()
 
 def main():
     banner()
@@ -50,6 +55,12 @@ def main():
 
     if args.mode == "domain":
         result = engine.run_domain_analysis(args.target)
+
+    elif args.mode == "subdomain":
+        result = engine.run_subdomain(args.target)
+
+    elif args.mode == "http":
+        result = engine.analyze_http(args.target)
 
     elif args.mode == "ip":
         result = engine.run_ip_analysis(args.target)
