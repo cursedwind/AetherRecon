@@ -1,5 +1,5 @@
 APP_NAME = "AetherRecon"
-APP_VERSION = "1.0"
+APP_VERSION = "1.1"
 
 TIMEOUT = 6
 USER_AGENT = "AetherRecon/1.0"
@@ -13,5 +13,6 @@ ENABLE_SUBDOMAIN = True
 ENABLE_HTTP = True
 
 MAX_REQUESTS = 60
+
 
 DEBUG = False
