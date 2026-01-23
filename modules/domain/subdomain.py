@@ -14,13 +14,13 @@ def resolve_subdomain(subdomain: str):
         return []
 
 
-def from_crtsh(domain: str) -> set:
+def from_crtsh(domain: str) -> list:
     subdomains = set()
 
     try:
         response = requests.get(CRT_URL.format(domain=domain), timeout=TIMEOUT)
         if response.status_code != 200:
-            return subdomains
+            return []
 
         data = response.json()
 
@@ -33,10 +33,10 @@ def from_crtsh(domain: str) -> set:
     except Exception:
         pass
 
-    return subdomains
+    return sorted(subdomains)
 
 
-def bruteforce(domain: str, wordlist: list) -> set:
+def bruteforce(domain: str, wordlist: list) -> list:
     found = set()
 
     for word in wordlist:
@@ -45,15 +45,16 @@ def bruteforce(domain: str, wordlist: list) -> set:
         if ips:
             found.add(sub)
 
-    return found
+    return sorted(found)
 
 
 def enumerate_subdomains(domain: str, wordlist: list = None) -> dict:
     results = set()
 
-    results |= from_crtsh(domain)
+    results |= set(from_crtsh(domain))
+
     if wordlist:
-        results |= bruteforce(domain, wordlist)
+        results |= set(bruteforce(domain, wordlist))
 
     resolved = {}
 
