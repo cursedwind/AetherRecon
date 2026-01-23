@@ -80,8 +80,6 @@ class Engine:
                 "cname_record": get_cname_record(domain),
                 "txt_records": get_txt_records(domain)
             },
-            "subdomains": enumerate_subdomains(domain),
-            "http": analyze_http(f"http://{domain}")
         }
 
         self.logger.info(f"Domain analysis completed for {domain}.")
@@ -107,6 +105,11 @@ class Engine:
     def from_crtsh(self, domain: str):
         self.logger.info(f"Fetching subdomains from crt.sh for {domain}...")
         return from_crtsh(domain)
+    
+    def run_subdomain(self, domain: str):
+        self.logger.info(f"Running full subdomain enumeration for {domain}...")
+        result = enumerate_subdomains(domain)
+        return result
 
 
     def run_ip_analysis(self, ip: str):
@@ -133,6 +136,9 @@ class Engine:
         self.logger.info(f"Getting geolocation for {ip}...")
         return get_geolocation(ip)
 
+
     def analyze_http(self, domain: str):
         self.logger.info(f"Analyzing HTTP for {domain}...")
-        return analyze_http(f"http://{domain}")
+        result = analyze_http(domain)
+        self.logger.info(f"HTTP analysis completed for {domain}.")
+        return result
